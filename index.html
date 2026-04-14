@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AurafyAi — Brand Studio for Creators</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+–white:  #FFFFFF;
+–off:    #F8F7F5;
+–sand:   #EDE8E0;
+–stone:  #C8BFB0;
+–mist:   #8A8480;
+–ink:    #1C1917;
+–gold:   #C9A96E;
+–blush:  #E8D5C4;
+–deep:   #14110E;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+font-family: ‘DM Sans’, sans-serif;
+background: var(–white);
+color: var(–ink);
+cursor: none;
+overflow-x: hidden;
+}
+
+/* ── CUSTOM CURSOR ── */
+.cursor {
+position: fixed;
+width: 10px; height: 10px;
+background: var(–gold);
+border-radius: 50%;
+pointer-events: none;
+z-index: 9999;
+transform: translate(-50%, -50%);
+transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+mix-blend-mode: multiply;
+}
+
+.cursor-ring {
+position: fixed;
+width: 36px; height: 36px;
+border: 1px solid rgba(201,169,110,0.4);
+border-radius: 50%;
+pointer-events: none;
+z-index: 9998;
+transform: translate(-50%, -50%);
+transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+}
+
+body:hover .cursor { opacity: 1; }
+
+/* ── NAV ── */
+nav {
+position: fixed;
+top: 0; left: 0; right: 0;
+z-index: 100;
+padding: 24px 60px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+background: rgba(248,247,245,0.85);
+backdrop-filter: blur(12px);
+border-bottom: 1px solid transparent;
+transition: border-color 0.3s ease;
+}
+
+nav.scrolled { border-bottom-color: var(–sand); }
+
+.nav-logo {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 22px;
+font-weight: 300;
+color: var(–ink);
+text-decoration: none;
+}
+
+.nav-logo span { color: var(–gold); font-style: italic; }
+
+.nav-links {
+display: flex;
+align-items: center;
+gap: 40px;
+list-style: none;
+}
+
+.nav-links a {
+font-size: 12px;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–mist);
+text-decoration: none;
+transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(–ink); }
+
+.nav-cta {
+background: var(–ink) !important;
+color: var(–white) !important;
+padding: 10px 24px;
+border-radius: 100px;
+letter-spacing: 0.1em !important;
+transition: background 0.2s !important;
+}
+
+.nav-cta:hover { background: var(–gold) !important; color: var(–white) !important; }
+
+/* ── HERO ── */
+.hero {
+min-height: 100vh;
+background: var(–off);
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+text-align: center;
+padding: 120px 60px 80px;
+position: relative;
+overflow: hidden;
+}
+
+.hero-bg-circle {
+position: absolute;
+border-radius: 50%;
+pointer-events: none;
+}
+
+.hero-bg-1 {
+width: 600px; height: 600px;
+top: -200px; right: -150px;
+background: radial-gradient(circle, rgba(201,169,110,0.08) 0%, transparent 70%);
+}
+
+.hero-bg-2 {
+width: 400px; height: 400px;
+bottom: -100px; left: -80px;
+background: radial-gradient(circle, rgba(232,213,196,0.4) 0%, transparent 70%);
+}
+
+.hero-bg-3 {
+width: 300px; height: 300px;
+top: 30%; left: 5%;
+background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 70%);
+}
+
+.hero-eyebrow {
+display: inline-flex;
+align-items: center;
+gap: 8px;
+font-size: 10px;
+letter-spacing: 0.25em;
+text-transform: uppercase;
+color: var(–mist);
+margin-bottom: 36px;
+opacity: 0;
+animation: riseUp 0.9s 0.1s ease forwards;
+}
+
+.hero-eyebrow::before, .hero-eyebrow::after {
+content: ‘’;
+width: 24px; height: 1px;
+background: var(–stone);
+}
+
+.hero-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(56px, 8vw, 108px);
+font-weight: 300;
+line-height: 1;
+color: var(–ink);
+margin-bottom: 8px;
+opacity: 0;
+animation: riseUp 0.9s 0.25s ease forwards;
+}
+
+.hero-title em {
+font-style: italic;
+color: var(–gold);
+}
+
+.hero-title-2 {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(56px, 8vw, 108px);
+font-weight: 300;
+font-style: italic;
+line-height: 1;
+color: var(–ink);
+margin-bottom: 40px;
+opacity: 0;
+animation: riseUp 0.9s 0.4s ease forwards;
+}
+
+.hero-sub {
+font-size: 15px;
+color: var(–mist);
+font-weight: 300;
+max-width: 420px;
+line-height: 1.8;
+margin-bottom: 48px;
+opacity: 0;
+animation: riseUp 0.9s 0.55s ease forwards;
+}
+
+.hero-actions {
+display: flex;
+align-items: center;
+gap: 20px;
+opacity: 0;
+animation: riseUp 0.9s 0.7s ease forwards;
+}
+
+.btn-primary {
+background: var(–ink);
+color: var(–white);
+padding: 16px 36px;
+border-radius: 100px;
+font-size: 12px;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+text-decoration: none;
+transition: background 0.25s, transform 0.2s;
+}
+
+.btn-primary:hover { background: var(–gold); transform: translateY(-2px); }
+
+.btn-secondary {
+color: var(–mist);
+font-size: 12px;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+text-decoration: none;
+display: flex;
+align-items: center;
+gap: 8px;
+transition: color 0.2s;
+}
+
+.btn-secondary:hover { color: var(–ink); }
+
+.btn-secondary::after {
+content: ‘↓’;
+font-size: 14px;
+}
+
+.hero-stats {
+position: absolute;
+bottom: 48px;
+display: flex;
+gap: 60px;
+opacity: 0;
+animation: riseUp 0.9s 0.85s ease forwards;
+}
+
+.hero-stat-num {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 32px;
+font-weight: 300;
+color: var(–ink);
+}
+
+.hero-stat-num span { color: var(–gold); }
+
+.hero-stat-label {
+font-size: 10px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+color: var(–mist);
+margin-top: 4px;
+}
+
+/* ── MARQUEE ── */
+.marquee-wrap {
+background: var(–ink);
+padding: 18px 0;
+overflow: hidden;
+white-space: nowrap;
+}
+
+.marquee-track {
+display: inline-flex;
+animation: marquee 20s linear infinite;
+}
+
+.marquee-item {
+display: inline-flex;
+align-items: center;
+gap: 20px;
+padding: 0 32px;
+font-size: 11px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: rgba(255,255,255,0.4);
+}
+
+.marquee-dot {
+width: 4px; height: 4px;
+border-radius: 50%;
+background: var(–gold);
+flex-shrink: 0;
+}
+
+@keyframes marquee {
+from { transform: translateX(0); }
+to { transform: translateX(-50%); }
+}
+
+/* ── SECTION BASE ── */
+.section {
+padding: 120px 60px;
+max-width: 1100px;
+margin: 0 auto;
+}
+
+.section-eyebrow {
+font-size: 9px;
+letter-spacing: 0.3em;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 16px;
+}
+
+.section-heading {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: clamp(36px, 5vw, 60px);
+font-weight: 300;
+color: var(–ink);
+line-height: 1.1;
+margin-bottom: 20px;
+}
+
+.section-heading em { font-style: italic; color: var(–gold); }
+
+.section-sub {
+font-size: 14px;
+color: var(–mist);
+font-weight: 300;
+line-height: 1.8;
+max-width: 480px;
+}
+
+/* ── WORK / PORTFOLIO ── */
+#work {
+background: var(–white);
+padding: 120px 0;
+}
+
+.work-header {
+padding: 0 60px;
+max-width: 1100px;
+margin: 0 auto 64px;
+display: flex;
+align-items: flex-end;
+justify-content: space-between;
+gap: 40px;
+}
+
+.work-grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 2px;
+padding: 0;
+}
+
+.work-card {
+position: relative;
+overflow: hidden;
+cursor: none;
+aspect-ratio: 3/4;
+}
+
+.work-card-bg {
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+transition: transform 0.6s ease;
+padding: 40px;
+}
+
+.work-card:hover .work-card-bg { transform: scale(1.03); }
+
+.work-card-overlay {
+position: absolute;
+inset: 0;
+background: rgba(28,25,23,0);
+transition: background 0.4s ease;
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+justify-content: flex-end;
+padding: 36px;
+}
+
+.work-card:hover .work-card-overlay { background: rgba(28,25,23,0.75); }
+
+.work-card-info {
+opacity: 0;
+transform: translateY(12px);
+transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.work-card:hover .work-card-info { opacity: 1; transform: translateY(0); }
+
+.work-card-brand {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 28px;
+font-weight: 300;
+color: var(–white);
+margin-bottom: 4px;
+}
+
+.work-card-niche {
+font-size: 10px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–gold);
+margin-bottom: 16px;
+}
+
+.work-card-tag {
+display: inline-block;
+border: 1px solid rgba(255,255,255,0.3);
+border-radius: 100px;
+padding: 6px 14px;
+font-size: 10px;
+letter-spacing: 0.1em;
+color: rgba(255,255,255,0.7);
+}
+
+/* Card 1 — Aura Skincare */
+.card-aura { background: linear-gradient(135deg, #FFF4E6 0%, #FFE0B2 100%); }
+
+.aura-logo-display {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 56px;
+font-weight: 600;
+background: linear-gradient(135deg, #FF6B35, #FF1E8B);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 16px;
+}
+
+.aura-palette-dots {
+display: flex;
+gap: 8px;
+}
+
+.aura-dot {
+width: 20px; height: 20px;
+border-radius: 50%;
+}
+
+/* Card 3 — Brewed Coffee */
+.card-brewed { background: linear-gradient(135deg, #0D0704 0%, #1F0F08 100%); }
+
+.brewed-logo-display {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 48px;
+font-weight: 600;
+color: #FFE8C8;
+letter-spacing: 0.08em;
+}
+
+.brewed-logo-display span { color: #E8935A; }
+
+.lume-logo-display {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 64px;
+font-weight: 400;
+color: #2A1F1A;
+margin-bottom: 16px;
+font-style: italic;
+}
+
+.lume-logo-display span { color: #B8925A; }
+
+/* Card 3 — Vyne */
+.card-vyne { background: linear-gradient(135deg, #0F1A0F 0%, #1E2E1E 100%); }
+
+.vyne-logo-display {
+font-family: ‘DM Sans’, sans-serif;
+font-size: 52px;
+font-weight: 500;
+color: #fff;
+letter-spacing: -0.03em;
+margin-bottom: 16px;
+}
+
+.vyne-logo-display span { color: #86C46B; }
+
+.vyne-palette-dots {
+display: flex;
+gap: 8px;
+}
+
+.vyne-dot {
+width: 20px; height: 20px;
+border-radius: 4px;
+}
+
+/* ── SERVICES ── */
+#services {
+background: var(–off);
+padding: 120px 0;
+}
+
+.services-inner {
+max-width: 1100px;
+margin: 0 auto;
+padding: 0 60px;
+}
+
+.services-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 2px;
+margin-top: 64px;
+}
+
+.service-card {
+background: var(–white);
+padding: 48px;
+position: relative;
+overflow: hidden;
+transition: background 0.3s ease;
+}
+
+.service-card:hover { background: var(–ink); }
+
+.service-card::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0;
+width: 3px; height: 0;
+background: var(–gold);
+transition: height 0.4s ease;
+}
+
+.service-card:hover::before { height: 100%; }
+
+.service-num {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 13px;
+color: var(–gold);
+margin-bottom: 24px;
+display: block;
+}
+
+.service-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 28px;
+font-weight: 300;
+color: var(–ink);
+margin-bottom: 16px;
+transition: color 0.3s;
+}
+
+.service-card:hover .service-title { color: var(–white); }
+
+.service-desc {
+font-size: 13px;
+color: var(–mist);
+line-height: 1.8;
+margin-bottom: 28px;
+transition: color 0.3s;
+}
+
+.service-card:hover .service-desc { color: rgba(255,255,255,0.4); }
+
+.service-price {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 22px;
+font-weight: 300;
+color: var(–gold);
+}
+
+.service-includes {
+margin-top: 16px;
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.service-include-item {
+font-size: 11px;
+color: var(–mist);
+display: flex;
+align-items: center;
+gap: 8px;
+transition: color 0.3s;
+}
+
+.service-card:hover .service-include-item { color: rgba(255,255,255,0.4); }
+
+.service-include-item::before {
+content: ‘✦’;
+font-size: 8px;
+color: var(–gold);
+}
+
+/* ── PROCESS ── */
+#process {
+background: var(–ink);
+padding: 120px 0;
+}
+
+.process-inner {
+max-width: 1100px;
+margin: 0 auto;
+padding: 0 60px;
+}
+
+.process-inner .section-eyebrow { color: var(–gold); }
+.process-inner .section-heading { color: var(–white); }
+.process-inner .section-sub { color: rgba(255,255,255,0.4); }
+
+.process-steps {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 2px;
+margin-top: 64px;
+}
+
+.process-step {
+background: rgba(255,255,255,0.03);
+padding: 40px 32px;
+border: 1px solid rgba(255,255,255,0.05);
+position: relative;
+transition: background 0.3s;
+}
+
+.process-step:hover { background: rgba(255,255,255,0.06); }
+
+.process-step-num {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 48px;
+font-weight: 300;
+color: rgba(201,169,110,0.2);
+line-height: 1;
+margin-bottom: 20px;
+}
+
+.process-step-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 20px;
+font-weight: 300;
+color: var(–white);
+margin-bottom: 12px;
+}
+
+.process-step-desc {
+font-size: 12px;
+color: rgba(255,255,255,0.35);
+line-height: 1.7;
+}
+
+.process-step-time {
+margin-top: 20px;
+font-size: 9px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–gold);
+}
+
+/* ── ABOUT ── */
+#about {
+background: var(–white);
+padding: 120px 0;
+}
+
+.about-inner {
+max-width: 1100px;
+margin: 0 auto;
+padding: 0 60px;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 100px;
+align-items: center;
+}
+
+.about-visual {
+position: relative;
+}
+
+.about-visual-card {
+background: var(–off);
+border-radius: 4px;
+padding: 60px 48px;
+text-align: center;
+}
+
+.about-visual-logo {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 52px;
+font-weight: 300;
+color: var(–ink);
+margin-bottom: 24px;
+}
+
+.about-visual-logo span { color: var(–gold); font-style: italic; }
+
+.about-visual-tags {
+display: flex;
+flex-wrap: wrap;
+gap: 8px;
+justify-content: center;
+margin-bottom: 32px;
+}
+
+.about-tag {
+border: 1px solid var(–sand);
+border-radius: 100px;
+padding: 6px 14px;
+font-size: 10px;
+letter-spacing: 0.1em;
+color: var(–mist);
+}
+
+.about-accent {
+position: absolute;
+bottom: -24px; right: -24px;
+width: 120px; height: 120px;
+background: var(–gold);
+border-radius: 4px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.about-accent-text {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 13px;
+font-style: italic;
+color: var(–white);
+text-align: center;
+line-height: 1.4;
+}
+
+.about-content .section-heading { margin-bottom: 24px; }
+
+.about-text {
+font-size: 14px;
+color: var(–mist);
+line-height: 1.9;
+margin-bottom: 16px;
+}
+
+.about-list {
+margin-top: 32px;
+display: flex;
+flex-direction: column;
+gap: 12px;
+}
+
+.about-list-item {
+display: flex;
+align-items: center;
+gap: 12px;
+font-size: 13px;
+color: var(–ink);
+}
+
+.about-list-item::before {
+content: ‘’;
+width: 20px; height: 1px;
+background: var(–gold);
+flex-shrink: 0;
+}
+
+/* ── CONTACT / CTA ── */
+#contact {
+background: var(–off);
+padding: 120px 60px;
+text-align: center;
+}
+
+.contact-inner {
+max-width: 640px;
+margin: 0 auto;
+}
+
+.contact-inner .section-heading {
+font-size: clamp(40px, 6vw, 72px);
+margin-bottom: 20px;
+}
+
+.contact-inner .section-sub {
+max-width: 100%;
+margin: 0 auto 48px;
+}
+
+.contact-form {
+display: flex;
+flex-direction: column;
+gap: 16px;
+text-align: left;
+}
+
+.form-row {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 16px;
+}
+
+.form-field {
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.form-label {
+font-size: 9px;
+letter-spacing: 0.2em;
+text-transform: uppercase;
+color: var(–mist);
+}
+
+.form-input, .form-select, .form-textarea {
+background: var(–white);
+border: 1px solid var(–sand);
+border-radius: 4px;
+padding: 14px 16px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 13px;
+color: var(–ink);
+outline: none;
+transition: border-color 0.2s;
+width: 100%;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+border-color: var(–gold);
+}
+
+.form-textarea { resize: vertical; min-height: 100px; }
+
+.form-submit {
+background: var(–ink);
+color: var(–white);
+border: none;
+border-radius: 100px;
+padding: 18px 48px;
+font-family: ‘DM Sans’, sans-serif;
+font-size: 12px;
+letter-spacing: 0.15em;
+text-transform: uppercase;
+cursor: none;
+transition: background 0.25s, transform 0.2s;
+align-self: center;
+margin-top: 8px;
+}
+
+.form-submit:hover { background: var(–gold); transform: translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+background: var(–ink);
+padding: 60px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+flex-wrap: wrap;
+gap: 24px;
+}
+
+.footer-logo {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 24px;
+font-weight: 300;
+color: var(–white);
+}
+
+.footer-logo span { color: var(–gold); font-style: italic; }
+
+.footer-links {
+display: flex;
+gap: 32px;
+list-style: none;
+}
+
+.footer-links a {
+font-size: 11px;
+letter-spacing: 0.1em;
+color: rgba(255,255,255,0.3);
+text-decoration: none;
+transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(–gold); }
+
+.footer-copy {
+font-size: 10px;
+color: rgba(255,255,255,0.2);
+letter-spacing: 0.05em;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes riseUp {
+from { opacity: 0; transform: translateY(24px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+opacity: 0;
+transform: translateY(32px);
+transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+nav { padding: 20px 24px; }
+.nav-links { display: none; }
+.hero { padding: 100px 24px 60px; }
+.hero-stats { gap: 32px; }
+.section { padding: 80px 24px; }
+.work-grid { grid-template-columns: 1fr; }
+.services-grid { grid-template-columns: 1fr; }
+.process-steps { grid-template-columns: 1fr 1fr; }
+.about-inner { grid-template-columns: 1fr; gap: 48px; }
+.form-row { grid-template-columns: 1fr; }
+footer { padding: 40px 24px; flex-direction: column; align-items: flex-start; }
+.work-header { flex-direction: column; align-items: flex-start; padding: 0 24px; }
+}
+</style>
+
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+
+<nav id="nav">
+  <a href="#" class="nav-logo">Aurafy<span>Ai</span></a>
+  <ul class="nav-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="hero-bg-circle hero-bg-1"></div>
+  <div class="hero-bg-circle hero-bg-2"></div>
+  <div class="hero-bg-circle hero-bg-3"></div>
+
+  <div class="hero-eyebrow">Brand Studio for Creators</div>
+  <h1 class="hero-title">Your brand,</h1>
+  <h1 class="hero-title-2"><em>elevated.</em></h1>
+  <p class="hero-sub">AI-powered brand identities designed specifically for content creators and influencers. Look as good as your content.</p>
+
+  <div class="hero-actions">
+    <a href="#work" class="btn-primary">View Work</a>
+    <a href="#contact" class="btn-secondary">Start Your Brand</a>
+  </div>
+
+  <div class="hero-stats">
+    <div>
+      <div class="hero-stat-num">5<span>–</span>7</div>
+      <div class="hero-stat-label">Day Delivery</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">£<span>50</span></div>
+      <div class="hero-stat-label">Starting From</div>
+    </div>
+    <div>
+      <div class="hero-stat-num">100<span>%</span></div>
+      <div class="hero-stat-label">Creator-Focused</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span>Logo Design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Color Palettes</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Brand Strategy</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Social Templates</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Typography Systems</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Style Guides</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Creator Brands</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>AI-Powered Design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Logo Design</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Color Palettes</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Brand Strategy</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Social Templates</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Typography Systems</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Style Guides</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Creator Brands</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>AI-Powered Design</span>
+  </div>
+</div>
+
+<!-- WORK -->
+
+<section id="work">
+  <div class="work-header reveal">
+    <div>
+      <div class="section-eyebrow">02 — Selected Work</div>
+      <h2 class="section-heading">Brand <em>Concepts</em></h2>
+    </div>
+    <p class="section-sub" style="margin:0;">Three distinct brands — creators, lifestyle, and small business — each with its own world, palette, and personality.</p>
+  </div>
+
+  <div class="work-grid" style="grid-template-columns:1fr 1fr 1fr;">
+    <!-- Lumé -->
+    <div class="work-card">
+      <div class="work-card-bg card-lume">
+        <div class="lume-logo-display">Lu<span>mé</span></div>
+        <div style="font-size:10px;letter-spacing:0.25em;text-transform:uppercase;color:#9A8578;">Style · Life · Identity</div>
+      </div>
+      <div class="work-card-overlay">
+        <div class="work-card-info">
+          <div class="work-card-brand">Lumé</div>
+          <div class="work-card-niche">Lifestyle · Fashion</div>
+          <div class="work-card-tag">Logo · Palette · Strategy</div>
+        </div>
+      </div>
+    </div>
+
+```
+<!-- Vyne -->
+<div class="work-card">
+  <div class="work-card-bg card-vyne">
+    <div class="vyne-logo-display">VY<span>NE</span></div>
+    <div class="vyne-palette-dots">
+      <div class="vyne-dot" style="background:#86C46B;"></div>
+      <div class="vyne-dot" style="background:#4A8A35;"></div>
+      <div class="vyne-dot" style="background:#0F1A0F;"></div>
+      <div class="vyne-dot" style="background:#F4FAF1;"></div>
+    </div>
+  </div>
+  <div class="work-card-overlay">
+    <div class="work-card-info">
+      <div class="work-card-brand">Vyne</div>
+      <div class="work-card-niche">Fitness · Wellness</div>
+      <div class="work-card-tag">Logo · Palette · Strategy</div>
+    </div>
+  </div>
+</div>
+
+<!-- Brewed — Coffee Shop -->
+<div class="work-card">
+  <div class="work-card-bg card-brewed">
+    <svg width="52" height="52" viewBox="0 0 52 52" fill="none" style="margin-bottom:16px;">
+      <path d="M10 14 Q10 8 16 8 L36 8 Q42 8 42 14 L40 36 Q40 42 34 42 L18 42 Q12 42 12 36 Z" stroke="#E8935A" stroke-width="1.5" fill="none"/>
+      <path d="M42 18 Q50 18 50 26 Q50 34 42 34" stroke="#E8935A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M20 8 Q20 2 26 2 Q32 2 32 8" stroke="#FFE8C8" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div class="brewed-logo-display">BREW<span>ED</span></div>
+    <div style="font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(255,232,200,0.5);margin-top:8px;">Est. 2026 · Specialty Coffee</div>
+  </div>
+  <div class="work-card-overlay">
+    <div class="work-card-info">
+      <div class="work-card-brand">Brewed</div>
+      <div class="work-card-niche">Coffee Shop · Small Business</div>
+      <div class="work-card-tag">Logo · Palette · Business Cards</div>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- SERVICES -->
+
+<section id="services">
+  <div class="services-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">03 — Services</div>
+      <h2 class="section-heading">What's <em>included</em></h2>
+    </div>
+
+```
+<div class="services-grid">
+  <div class="service-card reveal">
+    <span class="service-num">01</span>
+    <div class="service-title">Small Business Starter Kit</div>
+    <div class="service-desc">Perfect for new businesses and side hustles that need a professional look without the agency price tag. Get started looking legit from day one.</div>
+    <div class="service-price">£50</div>
+    <div class="service-includes">
+      <div class="service-include-item">2 logo designs</div>
+      <div class="service-include-item">2 business card designs</div>
+      <div class="service-include-item">Print-ready files included</div>
+      <div class="service-include-item">PNG & PDF exports</div>
+      <div class="service-include-item">1 round of revisions</div>
+    </div>
+  </div>
+
+  <div class="service-card reveal">
+    <span class="service-num">02</span>
+    <div class="service-title">Creator Brand Kit</div>
+    <div class="service-desc">Everything you need to show up consistently across every platform. Built around your niche, your personality, and your audience.</div>
+    <div class="service-price">£120</div>
+    <div class="service-includes">
+      <div class="service-include-item">Primary logo + 2 variations</div>
+      <div class="service-include-item">5-colour palette with hex codes</div>
+      <div class="service-include-item">Typography pairing guide</div>
+      <div class="service-include-item">1-page brand style guide PDF</div>
+      <div class="service-include-item">3 Canva social templates</div>
+      <div class="service-include-item">2 rounds of revisions</div>
+    </div>
+  </div>
+
+  <div class="service-card reveal">
+    <span class="service-num">03</span>
+    <div class="service-title">Brand Kit + Strategy</div>
+    <div class="service-desc">The full kit plus a deep-dive brand strategy document covering content pillars, audience positioning, and growth direction.</div>
+    <div class="service-price">£200</div>
+    <div class="service-includes">
+      <div class="service-include-item">Everything in Creator Brand Kit</div>
+      <div class="service-include-item">Full brand strategy document</div>
+      <div class="service-include-item">Content pillar framework</div>
+      <div class="service-include-item">Brand voice & tone guide</div>
+      <div class="service-include-item">Platform-specific guidance</div>
+      <div class="service-include-item">30-min strategy call</div>
+    </div>
+  </div>
+
+  <div class="service-card reveal" style="background:var(--sand);">
+    <span class="service-num" style="color:var(--gold);">✦</span>
+    <div class="service-title">Not sure what you need?</div>
+    <div class="service-desc">Send me a DM or fill out the form below. I'll take a look at your current brand and tell you exactly what would make the biggest difference.</div>
+    <a href="#contact" class="btn-primary" style="display:inline-block;margin-top:24px;font-size:11px;padding:14px 28px;">Let's Talk</a>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+
+<section id="process">
+  <div class="process-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">04 — How It Works</div>
+      <h2 class="section-heading" style="color:var(--white);">Simple <em>process.</em></h2>
+      <p class="section-sub">From questionnaire to finished brand kit in 5–7 days.</p>
+    </div>
+
+```
+<div class="process-steps">
+  <div class="process-step reveal">
+    <div class="process-step-num">01</div>
+    <div class="process-step-title">Fill the Questionnaire</div>
+    <div class="process-step-desc">Answer 20 questions about your niche, audience, vibe, and goals. Takes about 10 minutes.</div>
+    <div class="process-step-time">Day 1</div>
+  </div>
+  <div class="process-step reveal">
+    <div class="process-step-num">02</div>
+    <div class="process-step-title">Strategy & Moodboard</div>
+    <div class="process-step-desc">I build your brand strategy and present a moodboard for your approval before any design begins.</div>
+    <div class="process-step-time">Day 2</div>
+  </div>
+  <div class="process-step reveal">
+    <div class="process-step-num">03</div>
+    <div class="process-step-title">Design & Refine</div>
+    <div class="process-step-desc">Logo concepts, palette, typography, and templates — refined until everything feels exactly right.</div>
+    <div class="process-step-time">Days 3–5</div>
+  </div>
+  <div class="process-step reveal">
+    <div class="process-step-num">04</div>
+    <div class="process-step-title">Delivery</div>
+    <div class="process-step-desc">Your complete brand kit delivered via Figma and Google Drive. Ready to use everywhere, instantly.</div>
+    <div class="process-step-time">Days 6–7</div>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+
+<section id="about">
+  <div class="about-inner">
+    <div class="about-visual reveal">
+      <div class="about-visual-card">
+        <div class="about-visual-logo">Aurafy<span>Ai</span></div>
+        <div class="about-visual-tags">
+          <span class="about-tag">Graphic Design</span>
+          <span class="about-tag">AI-Powered</span>
+          <span class="about-tag">Creator-Focused</span>
+          <span class="about-tag">Brand Strategy</span>
+          <span class="about-tag">Fast Delivery</span>
+        </div>
+        <div style="font-size:11px;color:var(--mist);line-height:1.7;">Built for creators who are serious about their brand.</div>
+      </div>
+      <div class="about-accent">
+        <div class="about-accent-text">Est.<br>2026</div>
+      </div>
+    </div>
+
+```
+<div class="about-content reveal">
+  <div class="section-eyebrow">05 — About</div>
+  <h2 class="section-heading">Design that <em>understands</em> creators.</h2>
+  <p class="about-text">AurafyAi is a brand studio built specifically for content creators and influencers. I combine graphic design expertise with AI tools to deliver premium brand identities faster and more affordably than traditional agencies.</p>
+  <p class="about-text">Your content is already great. Your brand should match it.</p>
+
+  <div class="about-list">
+    <div class="about-list-item">AI-assisted design — faster turnaround, same quality</div>
+    <div class="about-list-item">Creator-first thinking built into every decision</div>
+    <div class="about-list-item">Strategy included — not just pretty logos</div>
+    <div class="about-list-item">Delivered in Figma + ready-to-use formats</div>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact">
+  <div class="contact-inner">
+    <div class="section-eyebrow reveal">06 — Get Started</div>
+    <h2 class="section-heading reveal">Ready to build <em>your brand?</em></h2>
+    <p class="section-sub reveal">Fill out the form below and I'll get back to you within 24 hours with next steps.</p>
+
+```
+<div class="contact-form reveal">
+  <div class="form-row">
+    <div class="form-field">
+      <label class="form-label">Your Name</label>
+      <input class="form-input" type="text" placeholder="Jane Smith">
+    </div>
+    <div class="form-field">
+      <label class="form-label">Instagram / TikTok Handle</label>
+      <input class="form-input" type="text" placeholder="@yourhandle">
+    </div>
+  </div>
+  <div class="form-field">
+    <label class="form-label">Your Niche</label>
+    <select class="form-select">
+      <option>Skincare & Beauty</option>
+      <option>Lifestyle & Fashion</option>
+      <option>Fitness & Wellness</option>
+      <option>Food & Recipes</option>
+      <option>Gaming & Tech</option>
+      <option>Travel & Adventure</option>
+      <option>Other</option>
+    </select>
+  </div>
+  <div class="form-field">
+    <label class="form-label">Package</label>
+    <select class="form-select">
+      <option>Small Business Starter Kit — £50</option>
+      <option>Creator Brand Kit — £120</option>
+      <option>Brand Kit + Strategy — £200</option>
+      <option>Not sure yet — let's chat</option>
+    </select>
+  </div>
+  <div class="form-field">
+    <label class="form-label">Tell me about your brand</label>
+    <textarea class="form-textarea" placeholder="What's your vibe? Who's your audience? What do you need?"></textarea>
+  </div>
+  <button class="form-submit">Send Enquiry ✦</button>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+
+<footer>
+  <div class="footer-logo">Aurafy<span>Ai</span></div>
+  <ul class="footer-links">
+    <li><a href="#work">Work</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#">Instagram</a></li>
+    <li><a href="#">TikTok</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 AurafyAi · All rights reserved</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .work-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+      ring.style.width = '56px';
+      ring.style.height = '56px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '10px';
+      cursor.style.height = '10px';
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+    });
+  });
+
+  // Nav scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+</script>
+
+</body>
+</html>
